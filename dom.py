@@ -20,13 +20,13 @@ def df(visited, graph, node):  # definisemo funkciju a za argumente uzimamo posj
                                #graf, i cvor u kom se trenutno nalazimo
     if node not in visited:
         print (f'{node} -> I SEE {graph.get(node)} -> putting {node} in visited')
-        visited.add(node)
+        visited.add(node)                                                           # u visited dodajemo trenutni cvor
         print (f'VISITED:{visited}\n')
-        if node == 'G':
+        if node == 'G':                                                             # ovo je trenutno dok ne smislimo kako prekinuti loop kad nadje G
             print('G FOUNDED, RETURNING IN PARENT NODE\n')
         
-        for neighbour in graph[node]:
-            if neighbour not in visited:
+        for neighbour in graph[node]:                                       # udji u prvi sledeci cvor koji trenutni cvor vidi:
+            if neighbour not in visited:                                    # ako taj cvor nismo ranije posjetili rekurzivno pozovi df.
                 df(visited, graph, neighbour)
 
 
