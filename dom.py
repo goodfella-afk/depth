@@ -1,35 +1,20 @@
-# deklarisemo graf u vidu dictionarija
-# tako da svakom kljucu(cvoru, tj. nodi) dodijelimo-pokazemo value-susjedne cvorove koje vidi.
-
 graph = {
-    'S': ['D','A'],    # S vidi A i D
-    'D': ['E','B'],    # etc
-    'A': ['B','D'],      
-    'E': ['F'],
-    'B': ['C'],
-    'F': ['G'],
-    'G': [],
-    'C': []
+
+    'S': {'D':10, 'A':3 },    # S vidi D i A
+    'D': {'E':10,'S':2,'B':6,'A':5},    # etc
+    'A': {'D':5, 'B':4,'S':3},      
+    'E': {'F':4,'D':2},
+    'B': {'C':2,'A':4,'D':6},
+    'F': {'G':3,'E':4},
+    'G': {'F':3},
+    'C': {'B':2}
 }
 
-print ('\n')
 
-visited = set() # visited nodes, keep track 
-
-def df(visited, graph, node):  # definisemo funkciju a za argumente uzimamo posjecene cvorove,
-                               #graf, i cvor u kom se trenutno nalazimo
-    if node not in visited:
-        print (f'{node} -> I SEE {graph.get(node)} -> putting {node} in visited')
-        visited.add(node)                                                           # u visited dodajemo trenutni cvor
-        print (f'VISITED:{visited}\n')
-        if node == 'G':                                                             # ovo je trenutno dok ne smislimo kako prekinuti loop kad nadje G
-            print('G FOUNDED, RETURNING IN PARENT NODE\n')
-        
-        for neighbour in graph[node]:                                       # udji u prvi sledeci cvor koji trenutni cvor vidi:
-            if neighbour not in visited:                                    # ako taj cvor nismo ranije posjetili rekurzivno pozovi df.
-                df(visited, graph, neighbour)
-
-
-
-# call
-df(visited, graph, 'S')
+min = 1000
+for neighbour in graph['D']:
+    print ('JA SAM', neighbour, ', a moj value je: ', graph[neighbour]['D'])
+    if graph[neighbour]['D'] < min:
+        min = graph[neighbour]['D']
+        min2 = neighbour
+print ('ja sam cvor najmanjeg puta:', min2)
