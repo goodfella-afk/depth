@@ -2,6 +2,9 @@
 # deklarisemo graf u vidu dictionarija
 # tako da svakom kljucu(cvoru, tj. nodi) dodijelimo-pokazemo SAMO value-susjedne cvorove koje vidi.
 
+from telnetlib import PRAGMA_HEARTBEAT
+
+
 graph = {
 
     'S': {'D':10, 'A':3},    # S vidi D i A
@@ -29,18 +32,17 @@ def df(visited, graph, node):  # definisemo funkciju a za argumente uzimamo prom
         
         
                                                                                                         # udji u prvi sledeci cvor koji trenutni cvor vidi (komsiju, a ostale koje vidis stavi na stack):
-                                                                                    # z = graph[node][neighbour] OVO MI POKAZUJE VRIJEDNOST SAO PRVOG PUTA
+                                                                            # z = graph[node][neighbour] OVO MI POKAZUJE VRIJEDNOST SAO PRVOG PUTA
         neighborVisited = []
         neigbours = dict(sorted(graph[node].items() , key=lambda item: item[1]))
         for neighbour in neigbours:
-            if neighbour not in neighborVisited and neighbour not in visited:
-                neighborVisited.append(neighbour)
-                test[neighbour] =  graph[node][neighbour]
-                df(visited, graph, neighbour)
-            
-        print ('sad cu da pozovem rekurz')
+                if neighbour not in neighborVisited and neighbour not in visited:
+                    neighborVisited.append(neighbour)
+                    test[neighbour] =  graph[node][neighbour]
+                    df(visited, graph, neighbour)
+           
         # for item in visited:                                                                      
-        #         df(visited, graph, item)  # ako taj cvor nismo ranije posjetili rekurzivno pozovi df a ako jesmo vrati se na pocetak steka i nastavi dalje.
+        #         df(visited, graph, item)  # ako taj cvor nismo ranije sposjetili rekurzivno pozovi df a ako jesmo vrati se na pocetak steka i nastavi dalje.
         
 
 # main
@@ -64,11 +66,22 @@ for node in visited:                                # provjera liste da vidimo u
 print ('  ', y, '    KRAJ')
 
 suma = 0
-for item in test:
-    suma = suma + test[item]
-    print(suma,test[item],item)
+keys = list(test.keys())
 
-print(suma)
+values=[]
+
+for key in keys:
+    if key != y:
+        values.append(key)
+    else:
+        break
+
+print('kljucevi',values)
+for item in test:
+    if item in values or item == y: 
+        suma = suma + test[item]
+
+print('ukupna cost effeiciency',suma)
 #TEST
 
 # z = graph[node][neighbour] OVO MI POKAZUJE VRIJEDNOST SAMO PRVOG PUTA
